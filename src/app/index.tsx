@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, StatusBar } from "react-native";
+import { Text, View, StyleSheet, Image } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
 export default function index() {
@@ -7,6 +7,11 @@ export default function index() {
 
     <SafeAreaView style={styles.container}>
       <View style={styles.container}>
+
+        <Image source={require("../assets/images/logo.png")}
+          style={styles.logo}
+          resizeMode="contain" />
+
         <Text style={styles.title}>Bienvenido a hyrule shop.</Text>
         <Text style={styles.subtext}>¿Qué vas a comprar hoy?</Text>
       </View>
@@ -26,6 +31,12 @@ const styles = StyleSheet.create({
     padding: 20,
     gap: 20,
     backgroundColor: "#000015",
+  },
+
+  logo: {
+    width: 250,
+    height: 150,
+    resizeMode: "contain",
   },
 
 
