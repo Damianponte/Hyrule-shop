@@ -1,6 +1,6 @@
 import { Text, View, StyleSheet, Image, useWindowDimensions } from "react-native";
-import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
-
+import { SafeAreaView } from "react-native-safe-area-context";
+import Button from "../../Components/button";
 export default function index() {
   const { width, height } = useWindowDimensions();
   return (
@@ -13,13 +13,17 @@ export default function index() {
         <View style={styles.texContainer}>
           <Text style={styles.title}>Bienvenido a hyrule shop.</Text>
           <Text style={styles.subtext}>¿Qué deseas a comprar hoy?</Text>
+          <Button
+            text="Comprar"
+            onPress={() => console.log('Click')}
+          />
         </View>
       </View>
     </SafeAreaView>
-
-
   );
 }
+
+
 
 
 
@@ -36,7 +40,7 @@ const styles = StyleSheet.create({
   },
   texContainer: {
     position: "relative",
-    top: 100,
+    top: 200,
     alignItems: "center",
     gap: 12,
   },
@@ -52,32 +56,32 @@ const styles = StyleSheet.create({
 
   },
 
-
-  shopWindow: {
-
-    width: "90%",
-    maxWidth: 450,
-    padding: 24,
-    borderRadius: 8,
-    backgroundColor: "rgba(5, 10, 60, 0.78)",
-    borderWidth: 3,
-    borderColor: "rgba(255, 255, 255, 0.4)",
-    alignItems: "center",
-    justifyContent: "center",
-    gap: 15,
-
-  },
-
-
   title: {
-    fontSize: 22,
+    fontSize: 32,
     fontWeight: "bold",
     color: "#ffffff",
     textAlign: "center",
   },
+
   subtext: {
-    fontSize: 16,
+    fontSize: 20,
     color: "#46ff50",
     textAlign: "center",
   },
+
+  customButton: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 20,
+    top: 30,
+
+  },
+
+  buttonText: {
+    fontSize: 26,
+    color: "#46ff50",
+    textAlign: "center",
+  }
+
 });
