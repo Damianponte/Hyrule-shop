@@ -1,6 +1,7 @@
 import { Text, View, StyleSheet, Image, useWindowDimensions } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Button from "../../Components/button";
+import { router } from "expo-router";
 export default function index() {
   const { width, height } = useWindowDimensions();
   return (
@@ -15,7 +16,7 @@ export default function index() {
           <Text style={styles.subtext}>¿Qué deseas a comprar hoy?</Text>
           <Button
             text="Comprar"
-            onPress={() => console.log('Click')}
+            onPress={() => router.push("/catalog")}
           />
         </View>
       </View>
