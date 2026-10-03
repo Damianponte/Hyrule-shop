@@ -22,7 +22,9 @@ const styles = StyleSheet.create({
     button: {
         padding: 10,
         marginVertical: 10,
-        backgroundColor: "#1935ee",
+        backgroundColor: "#1D5938",
+        borderColor: "#C6A34A",
+
         width: 100,
         borderRadius: 10,
     },
@@ -30,6 +32,7 @@ const styles = StyleSheet.create({
         color: "white",
         textAlign: "center",
         fontWeight: "bold",
+        fontSize: 16,
     },
 });
 

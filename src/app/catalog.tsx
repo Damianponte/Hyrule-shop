@@ -1,14 +1,54 @@
-import { useWindowDimensions, } from "react-native";
+import { useWindowDimensions, View, Text, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
-
+import { router } from "expo-router";
+import Button from "../../Components/button";
 export default function catalog() {
     const { width, height } = useWindowDimensions();
     return (
         <SafeAreaView style={styles.container}>
-            <view style={styles.backgroundColor}>
-                <Text style={styles.title}>estos son nuestros productos.</Text>
-            </view>
+            <View style={styles.texContainer}>
+                <Text style={styles.title}>Estos son nuestros productos.</Text>
+            </View>
+            <View style={styles.buttonContainer}>
+                <Button
+                    text="volver atras"
+                    onPress={() => router.push("/")}
+                />
+            </View>
         </SafeAreaView>
     )
 }
+
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "flex-start",
+        padding: 50,
+        gap: 20,
+        backgroundColor: "#0B1620",
+    },
+    texContainer: {
+
+        position: "relative",
+        alignItems: "center",
+        gap: 12,
+    },
+
+    title: {
+        fontSize: 32,
+        fontWeight: "bold",
+        color: "#ffffff",
+
+    },
+    buttonContainer: {
+        position: "absolute",
+        bottom: 30,
+        right: 30,
+    }
+
+
+});
+

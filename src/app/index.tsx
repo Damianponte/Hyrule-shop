@@ -70,19 +70,5 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
 
-  customButton: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    gap: 20,
-    top: 30,
-
-  },
-
-  buttonText: {
-    fontSize: 26,
-    color: "#46ff50",
-    textAlign: "center",
-  }
 
 });
