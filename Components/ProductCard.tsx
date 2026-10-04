@@ -5,16 +5,24 @@ type Product = {
     name: string;
     price: number;
 
+
 };
 type ProductCardProps = {
     product: Product;
 };
+
 export default function ProductCard({ product }: ProductCardProps) {
     return (
         <View style={styles.card}>
+            <Text style={styles.id}>
+                {product.id}
+            </Text>
 
             <Text style={styles.name}>
                 {product.name}
+            </Text>
+            <Text style={styles.price}>
+                {product.price}
             </Text>
 
         </View>
@@ -47,10 +55,25 @@ const styles = StyleSheet.create({
     },
 
 
+    id: {
+        fontSize: 20,
+        fontWeight: "bold",
+        color: "#4a3018",
+        padding: 10,
+
+    },
     name: {
         fontSize: 20,
         fontWeight: "bold",
-        color: "#222",
+        color: "#2a1b0a",
+        padding: 10,
+    },
+    price: {
+        fontSize: 20,
+        fontWeight: "bold",
+        color: "#1a4d2e",
+        padding: 10,
+
     },
 
 });
