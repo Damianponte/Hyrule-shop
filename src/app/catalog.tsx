@@ -2,6 +2,7 @@ import { useWindowDimensions, View, Text, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
 import Button from "../../Components/button";
+import ProductCard from "../../Components/ProductCard";
 export default function catalog() {
     const { width, height } = useWindowDimensions();
     return (
@@ -9,6 +10,7 @@ export default function catalog() {
             <View style={styles.texContainer}>
                 <Text style={styles.title}>Estos son nuestros productos.</Text>
             </View>
+            <ProductCard product={product} />
             <View style={styles.buttonContainer}>
                 <Button
                     text="volver atras"
