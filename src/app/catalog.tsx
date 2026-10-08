@@ -39,18 +39,14 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: "#0B1620",
         paddingTop: 20,
-        flexWrap: "wrap",
     },
     texContainer: {
-        flex: 1,
-        flexDirection: "row",
+
         alignItems: "center",
         justifyContent: "center",
         padding: 50,
-        gap: 20,
         backgroundColor: "#0B1620",
-        position: "relative",
-        margin: 50,
+
 
     },
 
@@ -58,6 +54,7 @@ const styles = StyleSheet.create({
         fontSize: 32,
         fontWeight: "bold",
         color: "#ffffff",
+        textAlign: "center",
 
     },
     buttonContainer: {
@@ -67,12 +64,14 @@ const styles = StyleSheet.create({
     },
 
     productList: {
+        flex: 1,
         flexDirection: "row",
         flexWrap: "wrap",
-        justifyContent: "space-between",
-        gap: 10,
-
-
+        justifyContent: "flex-start",
+        alignContent: "flex-start",
+        paddingHorizontal: 40,
+        paddingBottom: 100,
+        gap: 20,
 
     }
 
