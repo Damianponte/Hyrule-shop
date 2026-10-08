@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, useWindowDimensions } from "react-native";
 
 type Product = {
     id: number;
@@ -12,8 +12,10 @@ type ProductCardProps = {
 };
 
 export default function ProductCard({ product }: ProductCardProps) {
+    const { width } = useWindowDimensions();
+    const isDesktop = width > 600;
     return (
-        <View style={styles.card}>
+        <View style={[styles.card, isDesktop ? styles.desktopCard : styles.mobileCard]}>
             <Text style={styles.id}>
                 {product.id}
             </Text>
@@ -30,19 +32,14 @@ export default function ProductCard({ product }: ProductCardProps) {
 }
 
 const styles = StyleSheet.create({
-    containerProductCard: {
-
-    },
 
     card: {
-        width: "20%",
+        width: "100%",
         backgroundColor: "#d4b886",
         borderColor: "#4a3018",
         borderRadius: 12,
         padding: 15,
         marginVertical: 10,
-
-
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
@@ -75,5 +72,11 @@ const styles = StyleSheet.create({
         padding: 10,
 
     },
+    desktopCard: {
+        width: 220,
+    },
+    mobileCard: {
+        width: "100%",
+    }
 
 });
