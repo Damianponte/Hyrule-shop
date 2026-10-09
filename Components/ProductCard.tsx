@@ -1,14 +1,29 @@
-import { StyleSheet, View, Text, useWindowDimensions } from "react-native";
+import { StyleSheet, View, Text, useWindowDimensions, Image } from "react-native";
 
 type Product = {
+    image: string;
     id: number;
     name: string;
     price: number;
 
-
 };
 type ProductCardProps = {
     product: Product;
+
+};
+const Images: { [key: string]: any } = {
+    "arrows.webp": require("../assets/images/arrows.webp"),
+    "deku_nuts.webp": require("../assets/images/deku_nuts.webp"),
+    "bombs.webp": require("../assets/images/bombs.webp"),
+    "bombchus.webp": require("../assets/images/bombchus.webp"),
+    "deku_shield.webp": require("../assets/images/deku_shield.webp"),
+    "hylian_shield.webp": require("../assets/images/hylian_shield.webp"),
+    "red_potion.webp": require("../assets/images/red_potion.webp"),
+    "green_potion.webp": require("../assets/images/green_potion.webp"),
+    "bottle.webp": require("../assets/images/bottle.webp"),
+    "kokiri_sword.webp": require("../assets/images/kokiri_sword.webp"),
+    "biggoron_sword.webp": require("../assets/images/biggoron_sword.webp"),
+    "bomb_bag.webp": require("../assets/images/bomb_bag.webp"),
 };
 
 export default function ProductCard({ product }: ProductCardProps) {
@@ -16,9 +31,16 @@ export default function ProductCard({ product }: ProductCardProps) {
     const isDesktop = width > 600;
     return (
         <View style={[styles.card, isDesktop ? styles.desktopCard : styles.mobileCard]}>
+
             <Text style={styles.id}>
                 {product.id}
             </Text>
+
+            <Image
+                source={Images[product.image]}
+                style={styles.Image}
+                resizeMode="contain"
+            />
 
             <Text style={styles.name}>
                 {product.name}
@@ -47,8 +69,9 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.2,
         shadowRadius: 4,
+        alignContent: "center",
+        alignItems: "center",
 
-        elevation: 4,
     },
 
 
@@ -56,7 +79,8 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: "bold",
         color: "#4a3018",
-        padding: 10,
+        padding: 20,
+
 
     },
     name: {
@@ -73,10 +97,18 @@ const styles = StyleSheet.create({
 
     },
     desktopCard: {
-        width: 220,
+        width: 330,
     },
     mobileCard: {
         width: "100%",
+    },
+    Image: {
+        width: 100,
+        height: 100,
+        justifyContent: "center",
+        alignItems: "center",
+        paddingTop: 15,
+
     }
 
 });
