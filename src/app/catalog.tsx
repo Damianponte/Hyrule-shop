@@ -1,4 +1,4 @@
-import { useWindowDimensions, View, Text, StyleSheet, FlatList, Platform } from "react-native";
+import { useWindowDimensions, View, Text, StyleSheet, FlatList, Platform, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
 import Button from "../../Components/button";
@@ -14,14 +14,18 @@ export default function catalog() {
                     <Text style={styles.title}>Estos son nuestros productos.</Text>
 
                 </View>
-                <View style={styles.productList}>
+
+                <ScrollView
+                    contentContainerStyle={styles.productList}
+                    showsVerticalScrollIndicator={true}
+                >
                     {products.map((item) => (
                         <ProductCard
                             key={item.id.toString()}
                             product={item}
                         />
                     ))}
-                </View>
+                </ScrollView>
 
                 <View style={styles.buttonContainer}>
                     <Button
