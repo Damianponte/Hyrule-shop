@@ -1,7 +1,7 @@
-import { Stack } from "expo-router";
+import { Stack, router } from "expo-router";
 import { StatusBar, View, StyleSheet, Image, Text } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
-
+import Button from "../../Components/button";
 export default function RootLayout() {
   return (
     <SafeAreaProvider>
@@ -9,7 +9,7 @@ export default function RootLayout() {
       <View style={styles.PrincipalContent}>
         <SafeAreaView style={styles.safeAreaContainer}>
           <View style={styles.headerContainer}>
-            <View style={styles.leftblock}>
+            <View style={styles.leftBlock}>
               <Image
                 source={require("../../assets/images/logo/logo.jpg")}
                 style={styles.logoImage}
@@ -17,6 +17,16 @@ export default function RootLayout() {
               />
               <Text style={styles.shopTitle}>HYRULE</Text>
               <Text style={styles.shopSubtitle}>SHOP</Text>
+            </View>
+            <View style={styles.rightBlock}>
+              <Button
+                text="inicio"
+                onPress={() => router.push("/")}
+              />
+              <Button
+                text="catalogo"
+                onPress={() => router.push("/catalog")}
+              />
             </View>
 
           </View>
@@ -55,7 +65,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingHorizontal: 20,
   },
-  leftblock: {
+  leftBlock: {
     flexDirection: "row",
     alignItems: "center",
     gap: 10,
@@ -78,6 +88,11 @@ const styles = StyleSheet.create({
     fontSize: 10,
     fontWeight: "bold",
 
+  },
+  rightBlock: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
   },
 
 

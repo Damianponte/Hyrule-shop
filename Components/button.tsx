@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
     },
     text: {
-        color: "FCD34D",
+        color: "#FCD34D",
         textAlign: "center",
         fontWeight: "bold",
         fontSize: 16,
