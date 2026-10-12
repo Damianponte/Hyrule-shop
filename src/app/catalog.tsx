@@ -7,34 +7,37 @@ import products from "../../Data/Products.json";
 
 export default function catalog() {
     const { width, height } = useWindowDimensions();
-    if (Platform.OS === 'web')
-        return (
-            <SafeAreaView style={styles.container}>
-                <View style={styles.texContainer}>
-                    <Text style={styles.title}>Estos son nuestros productos.</Text>
 
-                </View>
+    return (
+        <SafeAreaView style={styles.container}>
+            <View style={styles.texContainer}>
+                <Text style={styles.title}>Estos son nuestros productos.</Text>
 
-                <ScrollView
-                    contentContainerStyle={styles.productList}
-                    showsVerticalScrollIndicator={true}
-                >
-                    {products.map((item) => (
-                        <ProductCard
-                            key={item.id.toString()}
-                            product={item}
-                        />
-                    ))}
-                </ScrollView>
+            </View>
 
+            <ScrollView
+                style={{ flex: 1 }}
+                contentContainerStyle={styles.productList}
+                showsVerticalScrollIndicator={true}
+            >
+
+                {products.map((item) => (
+                    <ProductCard
+                        key={item.id.toString()}
+                        product={item}
+                    />
+                ))}
                 <View style={styles.buttonContainer}>
                     <Button
-                        text="volver atras"
-                        onPress={() => router.push("/")}
+                        text="volver <arriba>"
+                        onPress={() => router.push("/catalog")}
                     />
                 </View>
-            </SafeAreaView>
-        )
+            </ScrollView>
+
+
+        </SafeAreaView>
+    )
 }
 
 
@@ -42,7 +45,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: "#0B1620",
-        paddingTop: 20,
+        paddingTop: 10,
     },
     texContainer: {
 
@@ -68,7 +71,7 @@ const styles = StyleSheet.create({
     },
 
     productList: {
-        flex: 1,
+        flexGrow: 1,
         flexDirection: "row",
         flexWrap: "wrap",
         justifyContent: "flex-start",

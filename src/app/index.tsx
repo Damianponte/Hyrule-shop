@@ -3,10 +3,22 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Button from "../../Components/button";
 import { router } from "expo-router";
 export default function index() {
+  const { width } = useWindowDimensions();
 
+  const isMobile = width < 600;
+  const isTablet = width >= 600 && width < 1024;
+
+  const heroWidth = isMobile
+    ? "100%"
+    : isTablet
+      ? "85%"
+      : "70%";
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.heroContent}>
+
+
+      <View style={[styles.heroContent, { width: heroWidth },]}>
+
         <Text style={styles.subtext}>COLECCION EXCLUSIVA</Text>
         <Text style={styles.title}>Tesorería Real de Hyrule</Text>
         <Text style={styles.description}>
@@ -32,9 +44,8 @@ const styles = StyleSheet.create({
 
   },
   heroContent: {
-    width: "100%",
     alignItems: "center",
-    maxWidth: 480,
+    justifyContent: "center",
     padding: 40,
     backgroundColor: "#111827",
     borderRadius: 16,
