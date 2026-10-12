@@ -1,5 +1,5 @@
 import { Stack } from "expo-router";
-import { StatusBar, View, StyleSheet, Image } from "react-native";
+import { StatusBar, View, StyleSheet, Image, Text } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
 export default function RootLayout() {
@@ -9,11 +9,16 @@ export default function RootLayout() {
       <View style={styles.PrincipalContent}>
         <SafeAreaView style={styles.safeAreaContainer}>
           <View style={styles.headerContainer}>
-            <Image
-              source={require("../../assets/images/logo/logo.jpg")}
-              style={styles.logoImage}
-              resizeMode="contain"
-            />
+            <View style={styles.leftblock}>
+              <Image
+                source={require("../../assets/images/logo/logo.jpg")}
+                style={styles.logoImage}
+                resizeMode="contain"
+              />
+              <Text style={styles.shopTitle}>HYRULE</Text>
+              <Text style={styles.shopSubtitle}>SHOP</Text>
+            </View>
+
           </View>
 
         </SafeAreaView>
@@ -50,13 +55,31 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingHorizontal: 20,
   },
+  leftblock: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+  },
   logoImage: {
     height: 30,
     width: 30,
-    borderColor: "#D4AF37",
+    borderColor: "#5cdc38",
     borderRadius: 20,
     borderWidth: 1,
   },
+  shopTitle: {
+    color: "#F8FAFC",
+    fontSize: 15,
+    fontWeight: "bold",
+
+  },
+  shopSubtitle: {
+    color: "#F8FAFC",
+    fontSize: 10,
+    fontWeight: "bold",
+
+  },
+
 
   containerMain: {
     flex: 1,
