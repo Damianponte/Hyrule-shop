@@ -54,7 +54,8 @@ export default function RootLayout() {
           </Text>
         </View>
         <View style={styles.righttFotter}>
-          <Text style={styles.footerTitleRight}>@2026</Text>
+          <Text style={styles.footerTitleRight}>© 2026 Kingdom of Hyrule • Royal Guild</Text>
+
         </View>
 
       </View>
@@ -114,6 +115,8 @@ const styles = StyleSheet.create({
   containerMain: {
     flex: 1,
     backgroundColor: "#0A0F17",
+    borderBottomWidth: 1,
+    borderBottomColor: "#5cdc38"
   },
 
   ContainerFooter: {
@@ -124,8 +127,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     backgroundColor: "#0D131F",
     gap: 20,
-    borderTopColor: "#5cdc38",
-    padding: 20,
+    padding: 30,
   },
 
   leftFotter: {

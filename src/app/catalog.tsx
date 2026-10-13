@@ -27,14 +27,14 @@ export default function catalog() {
                         product={item}
                     />
                 ))}
-                <View style={styles.buttonContainer}>
-                    <Button
-                        text="volver <arriba>"
-                        onPress={() => router.push("/catalog")}
-                    />
-                </View>
-            </ScrollView>
 
+            </ScrollView>
+            <View style={styles.buttonContainer}>
+                <Button
+                    text="volver <arriba>"
+                    onPress={() => router.push("/catalog")}
+                />
+            </View>
 
         </SafeAreaView>
     )
@@ -68,6 +68,7 @@ const styles = StyleSheet.create({
         position: "absolute",
         bottom: 30,
         right: 30,
+        zIndex: 99,
     },
 
     productList: {
