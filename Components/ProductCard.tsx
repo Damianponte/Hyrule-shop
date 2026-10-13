@@ -62,13 +62,7 @@ const styles = StyleSheet.create({
         borderRadius: 12,
         padding: 15,
         marginVertical: 10,
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.2,
-        shadowRadius: 4,
+        boxShadow: "10px 4px 10px rgba(0, 0, 0, 0.6)",
         alignContent: "center",
         alignItems: "center",
 

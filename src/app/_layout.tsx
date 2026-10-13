@@ -5,7 +5,6 @@ import Button from "../../Components/button";
 export default function RootLayout() {
   return (
     <SafeAreaProvider>
-      <StatusBar barStyle="light-content" backgroundColor="#000015" />
       <View style={styles.PrincipalContent}>
         <SafeAreaView style={styles.safeAreaContainer}>
           <View style={styles.headerContainer}>
@@ -15,8 +14,11 @@ export default function RootLayout() {
                 style={styles.logoImage}
                 resizeMode="contain"
               />
-              <Text style={styles.shopTitle}>HYRULE</Text>
-              <Text style={styles.shopSubtitle}>SHOP</Text>
+              <View>
+                <Text style={styles.shopTitle}>HYRULE</Text>
+                <Text style={styles.shopSubtitle}>SHOP</Text>
+              </View>
+
             </View>
             <View style={styles.rightBlock}>
               <Button
@@ -54,8 +56,7 @@ export default function RootLayout() {
           </Text>
         </View>
         <View style={styles.righttFotter}>
-          <Text style={styles.footerTitleRight}>© 2026 Kingdom of Hyrule • Royal Guild</Text>
-
+          <Text style={styles.footerTitleRight}>@Hyrule Kingdom</Text>
         </View>
 
       </View>
@@ -75,16 +76,16 @@ const styles = StyleSheet.create({
     borderBottomColor: "#5cdc38"
   },
   headerContainer: {
-    height: 65,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingHorizontal: 20,
+    paddingHorizontal: 10,
   },
   leftBlock: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 10,
+    gap: 20,
+
   },
   logoImage: {
     height: 30,
@@ -117,17 +118,16 @@ const styles = StyleSheet.create({
     backgroundColor: "#0A0F17",
     borderBottomWidth: 1,
     borderBottomColor: "#5cdc38"
+
   },
 
   ContainerFooter: {
-    height: 65,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingHorizontal: 20,
+    padding: 15,
     backgroundColor: "#0D131F",
-    gap: 20,
-    padding: 30,
+
   },
 
   leftFotter: {

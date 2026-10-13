@@ -10,16 +10,17 @@ export default function catalog() {
 
     return (
         <SafeAreaView style={styles.container}>
-            <View style={styles.texContainer}>
-                <Text style={styles.title}>Estos son nuestros productos.</Text>
-
-            </View>
 
             <ScrollView
                 style={{ flex: 1 }}
                 contentContainerStyle={styles.productList}
                 showsVerticalScrollIndicator={true}
             >
+                <View style={styles.texContainer}>
+                    <Text style={styles.title}>Inventario</Text>
+
+                </View>
+
 
                 {products.map((item) => (
                     <ProductCard
@@ -45,15 +46,13 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: "#0B1620",
-        paddingTop: 10,
     },
     texContainer: {
-
+        width: "100%",
         alignItems: "center",
         justifyContent: "center",
-        padding: 50,
+        padding: 10,
         backgroundColor: "#0B1620",
-
 
     },
 
