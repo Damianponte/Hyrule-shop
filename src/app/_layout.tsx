@@ -1,5 +1,5 @@
 import { Stack, router } from "expo-router";
-import { StatusBar, View, StyleSheet, Image, Text } from "react-native";
+import { StatusBar, View, StyleSheet, Image, Text, Linking } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import Button from "../../Components/button";
 export default function RootLayout() {
@@ -43,8 +43,23 @@ export default function RootLayout() {
           }
         />
       </View>
+      <View style={styles.ContainerFooter}>
+        <View style={styles.leftFotter}>
+          <Text style={styles.footerTitle}>@ Damian Ponte</Text>
+          <Text
+            style={styles.email}
+            onPress={() => Linking.openURL('mailto:damianponte@hotmail.es')}
+          >
+            Contacto: Damian Ponte
+          </Text>
+        </View>
+        <View style={styles.righttFotter}>
+          <Text style={styles.footerTitleRight}>@2026</Text>
+        </View>
 
-    </SafeAreaProvider>
+      </View>
+
+    </SafeAreaProvider >
   );
 }
 
@@ -100,4 +115,53 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#0A0F17",
   },
+
+  ContainerFooter: {
+    height: 65,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: 20,
+    backgroundColor: "#0D131F",
+    gap: 20,
+    borderTopColor: "#5cdc38",
+    padding: 20,
+  },
+
+  leftFotter: {
+    flexDirection: "column",
+    justifyContent: "space-between",
+    gap: 10,
+  },
+
+  footerTitle: {
+    color: "#F8FAFC",
+    fontSize: 15,
+    fontWeight: "bold",
+  },
+  footerSubTitle: {
+    color: "#F8FAFC",
+    fontSize: 10,
+    fontWeight: "bold",
+  },
+
+  email: {
+    color: "#F8FAFC",
+    fontSize: 15,
+    fontWeight: "bold",
+  },
+
+  righttFotter: {
+    flexDirection: "column",
+    justifyContent: "space-between",
+    gap: 10,
+  },
+
+  footerTitleRight: {
+    color: "#F8FAFC",
+    fontSize: 15,
+    fontWeight: "bold",
+  }
+
+
 });
