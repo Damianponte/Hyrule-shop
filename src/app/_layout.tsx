@@ -2,66 +2,72 @@ import { Stack, router } from "expo-router";
 import { StatusBar, View, StyleSheet, Image, Text, Linking } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import Button from "../../Components/button";
+import { CartButton, CartProvider } from "../../Components/cartComponent";
 export default function RootLayout() {
   return (
-    <SafeAreaProvider>
-      <View style={styles.PrincipalContent}>
-        <SafeAreaView style={styles.safeAreaContainer}>
-          <View style={styles.headerContainer}>
-            <View style={styles.leftBlock}>
-              <Image
-                source={require("../../assets/images/logo/logo.jpg")}
-                style={styles.logoImage}
-                resizeMode="contain"
-              />
-              <View>
-                <Text style={styles.shopTitle}>HYRULE</Text>
-                <Text style={styles.shopSubtitle}>SHOP</Text>
+    <CartProvider>
+
+
+      <SafeAreaProvider>
+        <View style={styles.PrincipalContent}>
+          <SafeAreaView style={styles.safeAreaContainer}>
+            <View style={styles.headerContainer}>
+              <View style={styles.leftBlock}>
+                <Image
+                  source={require("../../assets/images/logo/logo.jpg")}
+                  style={styles.logoImage}
+                  resizeMode="contain"
+                />
+                <View>
+                  <Text style={styles.shopTitle}>HYRULE</Text>
+                  <Text style={styles.shopSubtitle}>SHOP</Text>
+                </View>
+
+              </View>
+              <View style={styles.rightBlock}>
+                <Button
+                  text="inicio"
+                  onPress={() => router.push("/")}
+                />
+                <Button
+                  text="catalogo"
+                  onPress={() => router.push("/catalog")}
+                />
+                <CartButton />
               </View>
 
             </View>
-            <View style={styles.rightBlock}>
-              <Button
-                text="inicio"
-                onPress={() => router.push("/")}
-              />
-              <Button
-                text="catalogo"
-                onPress={() => router.push("/catalog")}
-              />
-            </View>
 
+          </SafeAreaView>
+        </View>
+        <View style={styles.containerMain}>
+          <Stack
+            screenOptions={
+              {
+                headerShown: false,
+
+              }
+            }
+          />
+        </View>
+        <View style={styles.ContainerFooter}>
+          <View style={styles.leftFotter}>
+            <Text style={styles.footerTitle}>@ Damian Ponte</Text>
+            <Text
+              style={styles.email}
+              onPress={() => Linking.openURL('mailto:damianponte@hotmail.es')}
+            >
+              Contacto: Damian Ponte
+            </Text>
+          </View>
+          <View style={styles.righttFotter}>
+            <Text style={styles.footerTitleRight}>@Hyrule Kingdom</Text>
           </View>
 
-        </SafeAreaView>
-      </View>
-      <View style={styles.containerMain}>
-        <Stack
-          screenOptions={
-            {
-              headerShown: false,
-
-            }
-          }
-        />
-      </View>
-      <View style={styles.ContainerFooter}>
-        <View style={styles.leftFotter}>
-          <Text style={styles.footerTitle}>@ Damian Ponte</Text>
-          <Text
-            style={styles.email}
-            onPress={() => Linking.openURL('mailto:damianponte@hotmail.es')}
-          >
-            Contacto: Damian Ponte
-          </Text>
-        </View>
-        <View style={styles.righttFotter}>
-          <Text style={styles.footerTitleRight}>@Hyrule Kingdom</Text>
         </View>
 
-      </View>
-
-    </SafeAreaProvider >
+      </SafeAreaProvider >
+    </CartProvider>
   );
 }
 
