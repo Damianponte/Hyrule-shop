@@ -3,8 +3,8 @@ import Button from "./button";
 
 interface CartItem {
     id: number | string;
-    nombre: string;
-    cantidad: number;
+    name: string;
+    price: number;
     image: string;
     quantity: number;
 }
@@ -12,6 +12,7 @@ interface CartItem {
 interface CartContextType {
     cart: CartItem[];
     addToCart: (product: any) => void;
+    removeFromCart: (productId: number | string) => void;
     getTotalItems: () => number;
     getTotalPrice: () => number;
 }
@@ -29,7 +30,25 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
                     item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
                 );
             }
-            return [...prevCart, { ...product, quantity: 1 }];
+            return [...prevCart, {
+                id: product.id,
+                name: product.name,
+                price: product.price,
+                image: product.image,
+                quantity: 1
+            }];
+        });
+    };
+    const removeFromCart = (productId: number | string) => {
+        setCart((prevCart) => {
+            const existingItem = prevCart.find((item) => item.id === productId);
+            if (existingItem && existingItem.quantity > 1) {
+                return prevCart.map((item) =>
+                    item.id === productId ? { ...item, quantity: item.quantity - 1 } : item
+                );
+            }
+
+            return prevCart.filter((item) => item.id !== productId);
         });
     };
 
@@ -38,11 +57,11 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     };
 
     const getTotalPrice = () => {
-        return cart.reduce((sum, item) => sum + (item.cantidad * item.quantity), 0);
+        return cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
     };
 
     return (
-        <CartContext.Provider value={{ cart, addToCart, getTotalItems, getTotalPrice }}>
+        <CartContext.Provider value={{ cart, addToCart, removeFromCart, getTotalItems, getTotalPrice }}>
             {children}
         </CartContext.Provider>
     );
