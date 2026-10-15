@@ -1,4 +1,6 @@
 import { StyleSheet, View, Text, useWindowDimensions, Image } from "react-native";
+import { useCart } from "../Components/cartComponent";
+import Button from "../Components/button";
 
 type Product = {
     image: string;
@@ -27,6 +29,7 @@ const Images: { [key: string]: any } = {
 };
 
 export default function ProductCard({ product }: ProductCardProps) {
+    const { addToCart } = useCart();
     const { width } = useWindowDimensions();
     const isDesktop = width > 600;
     return (
@@ -41,13 +44,20 @@ export default function ProductCard({ product }: ProductCardProps) {
                 style={styles.Image}
                 resizeMode="contain"
             />
+            <View style={styles.groupNamePrice}>
+                <Text style={styles.name}>
+                    {product.name}
+                </Text>
+                <Text style={styles.price}>
+                    {product.price + " €"}
+                </Text>
 
-            <Text style={styles.name}>
-                {product.name}
-            </Text>
-            <Text style={styles.price}>
-                {product.price}
-            </Text>
+            </View>
+            <Button
+                text="Añadir"
+
+                onPress={() => addToCart(product)}
+            />
 
         </View>
     );
@@ -58,7 +68,8 @@ const styles = StyleSheet.create({
     card: {
         width: "100%",
         backgroundColor: "#d4b886",
-        borderColor: "#4a3018",
+        borderColor: "#fbf8f8",
+        borderWidth: 1,
         borderRadius: 12,
         padding: 15,
         marginVertical: 10,
@@ -72,8 +83,9 @@ const styles = StyleSheet.create({
     id: {
         fontSize: 20,
         fontWeight: "bold",
-        color: "#4a3018",
+        color: "#0d110e",
         padding: 20,
+        textAlign: "left",
 
 
     },
@@ -86,7 +98,7 @@ const styles = StyleSheet.create({
     price: {
         fontSize: 20,
         fontWeight: "bold",
-        color: "#1a4d2e",
+        color: "#0d110e",
         padding: 10,
 
     },
@@ -103,6 +115,9 @@ const styles = StyleSheet.create({
         alignItems: "center",
         paddingTop: 15,
 
+    },
+    groupNamePrice: {
+        flexDirection: "row",
     }
 
 });
