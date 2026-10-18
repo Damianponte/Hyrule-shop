@@ -1,6 +1,6 @@
-import { StyleSheet, View, Text, useWindowDimensions, Image } from "react-native";
-import { useCart } from "../Components/cartComponent";
+import { Image, StyleSheet, Text, useWindowDimensions, View } from "react-native";
 import Button from "../Components/button";
+import { useCart } from "../Components/cartComponent";
 
 type Product = {
     image: string;
@@ -34,16 +34,14 @@ export default function ProductCard({ product }: ProductCardProps) {
     const isDesktop = width > 600;
     return (
         <View style={[styles.card, isDesktop ? styles.desktopCard : styles.mobileCard]}>
+            <View style={styles.imageContainer}>
 
-            <Text style={styles.id}>
-                {product.id}
-            </Text>
-
-            <Image
-                source={Images[product.image]}
-                style={styles.Image}
-                resizeMode="contain"
-            />
+                <Image
+                    source={Images[product.image]}
+                    style={styles.Image}
+                    resizeMode="contain"
+                />
+            </View>
             <View style={styles.groupNamePrice}>
                 <Text style={styles.name}>
                     {product.name}
@@ -51,13 +49,13 @@ export default function ProductCard({ product }: ProductCardProps) {
                 <Text style={styles.price}>
                     {product.price + " €"}
                 </Text>
+                <Button
+                    text="Añadir"
 
+                    onPress={() => addToCart(product)}
+                />
             </View>
-            <Button
-                text="Añadir"
 
-                onPress={() => addToCart(product)}
-            />
 
         </View>
     );
@@ -67,38 +65,38 @@ const styles = StyleSheet.create({
 
     card: {
         width: "100%",
-        backgroundColor: "#d4b886",
-        borderColor: "#fbf8f8",
+        backgroundColor: "#1E293B",
+        borderColor: "#334155",
         borderWidth: 1,
-        borderRadius: 12,
+        borderRadius: 16,
         padding: 15,
         marginVertical: 10,
-        boxShadow: "10px 4px 10px rgba(0, 0, 0, 0.6)",
-        alignContent: "center",
+        boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.3)",
+        justifyContent: "space-between",
         alignItems: "center",
 
     },
 
 
-    id: {
-        fontSize: 20,
-        fontWeight: "bold",
-        color: "#0d110e",
-        padding: 20,
-        textAlign: "left",
-
+    imageContainer: {
+        width: "100%",
+        height: 100,
+        justifyContent: "center",
+        alignItems: "center",
+        marginBottom: 10,
 
     },
+
     name: {
         fontSize: 20,
         fontWeight: "bold",
-        color: "#2a1b0a",
+        color: "#F8FAFC",
         padding: 10,
     },
     price: {
         fontSize: 20,
         fontWeight: "bold",
-        color: "#0d110e",
+        color: "#F59E0B",
         padding: 10,
 
     },
@@ -106,7 +104,7 @@ const styles = StyleSheet.create({
         width: 330,
     },
     mobileCard: {
-        width: "100%",
+        width: "48%",
     },
     Image: {
         width: 100,
