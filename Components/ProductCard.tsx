@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Text, useWindowDimensions, View } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View } from "react-native";
 import Button from "../Components/button";
 import { useCart } from "../Components/cartComponent";
 
@@ -29,9 +29,12 @@ const Images: { [key: string]: any } = {
 };
 
 export default function ProductCard({ product }: ProductCardProps) {
-    const { addToCart } = useCart();
+    const { cart, addToCart, removeFromCart } = useCart();
     const { width } = useWindowDimensions();
     const isDesktop = width > 600;
+    const itemInCart = cart.find((item) => item.id === product.id);
+    const quantity = itemInCart ? itemInCart.quantity : 0;
+
     return (
         <View style={[styles.card, isDesktop ? styles.desktopCard : styles.mobileCard]}>
             <View style={styles.imageContainer}>
@@ -42,21 +45,37 @@ export default function ProductCard({ product }: ProductCardProps) {
                     resizeMode="contain"
                 />
             </View>
-            <View style={styles.groupNamePrice}>
-                <Text style={styles.name}>
-                    {product.name}
-                </Text>
-                <Text style={styles.price}>
-                    {product.price + " €"}
-                </Text>
+
+            <Text style={styles.name}>
+                {product.name}
+            </Text>
+            <Text style={styles.price}>
+                {product.price + " €"}
+            </Text>
+
+            {quantity === 0 ? (
                 <Button
                     text="Añadir"
 
                     onPress={() => addToCart(product)}
                 />
-            </View>
-
-
+            ) : (
+                <View style={styles.quantityContainer}>
+                    <TouchableOpacity
+                        style={styles.qtyBtn}
+                        onPress={() => removeFromCart(product.id)}
+                    >
+                        <Text style={styles.qtyBtnText}>-</Text>
+                    </TouchableOpacity>
+                    <Text style={styles.qtyText}>{quantity}</Text>
+                    <TouchableOpacity
+                        style={styles.qtyBtn}
+                        onPress={() => addToCart(product)}
+                    >
+                        <Text style={styles.qtyBtnText}>+</Text>
+                    </TouchableOpacity>
+                </View>
+            )}
         </View>
     );
 }
@@ -66,11 +85,11 @@ const styles = StyleSheet.create({
     card: {
         width: "100%",
         backgroundColor: "#1E293B",
-        borderColor: "#334155",
+        borderColor: "#2DD4BF",
         borderWidth: 1,
         borderRadius: 16,
-        padding: 15,
-        marginVertical: 10,
+        padding: 12,
+        marginVertical: 8,
         boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.3)",
         justifyContent: "space-between",
         alignItems: "center",
@@ -83,15 +102,16 @@ const styles = StyleSheet.create({
         height: 100,
         justifyContent: "center",
         alignItems: "center",
-        marginBottom: 10,
+        marginBottom: 8,
 
     },
 
     name: {
-        fontSize: 20,
+        fontSize: 15,
         fontWeight: "bold",
         color: "#F8FAFC",
         padding: 10,
+        marginBottom: 4,
     },
     price: {
         fontSize: 20,
@@ -104,18 +124,44 @@ const styles = StyleSheet.create({
         width: 330,
     },
     mobileCard: {
-        width: "48%",
+        width: "47%",
     },
     Image: {
         width: 100,
         height: 100,
         justifyContent: "center",
         alignItems: "center",
-        paddingTop: 15,
+
 
     },
-    groupNamePrice: {
-        flexDirection: "row",
-    }
 
+    quantityContainer: {
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+        width: "30%",
+        backgroundColor: "#0A0F17",
+        borderRadius: 8,
+        borderWidth: 1,
+        borderColor: "#2DD4BF",
+        padding: 2,
+    },
+    qtyBtn: {
+        backgroundColor: "#2DD4BF",
+        width: 28,
+        height: 28,
+        borderRadius: 6,
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    qtyBtnText: {
+        color: "#0F172A",
+        fontSize: 16,
+        fontWeight: "bold",
+    },
+    qtyText: {
+        color: "#F8FAFC",
+        fontSize: 14,
+        fontWeight: "bold",
+    },
 });
