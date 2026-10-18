@@ -1,17 +1,22 @@
-import { useWindowDimensions, View, Text, StyleSheet, FlatList, Platform, ScrollView } from "react-native";
+import { useRef } from "react";
+import { ScrollView, StyleSheet, Text, useWindowDimensions, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { router } from "expo-router";
 import Button from "../../Components/button";
 import ProductCard from "../../Components/ProductCard";
 import products from "../../Data/Products.json";
 
 export default function catalog() {
     const { width, height } = useWindowDimensions();
+    const scrollViewRef = useRef<ScrollView>(null);
+
+    const scrollToTop = () => {
+        scrollViewRef.current?.scrollTo({ y: 0, animated: true });
+    };
 
     return (
         <SafeAreaView style={styles.container}>
-
             <ScrollView
+                ref={scrollViewRef}
                 style={{ flex: 1 }}
                 contentContainerStyle={styles.productList}
                 showsVerticalScrollIndicator={true}
@@ -20,7 +25,6 @@ export default function catalog() {
                     <Text style={styles.title}>Inventario</Text>
 
                 </View>
-
 
                 {products.map((item) => (
                     <ProductCard
@@ -32,8 +36,8 @@ export default function catalog() {
             </ScrollView>
             <View style={styles.buttonContainer}>
                 <Button
-                    text="volver <arriba>"
-                    onPress={() => router.push("/catalog")}
+                    text="↑ Arriba"
+                    onPress={scrollToTop}
                 />
             </View>
 
@@ -52,12 +56,12 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         padding: 10,
-        backgroundColor: "#0B1620",
+
 
     },
 
     title: {
-        fontSize: 32,
+        fontSize: 28,
         fontWeight: "bold",
         color: "#ffffff",
         textAlign: "center",
@@ -67,6 +71,7 @@ const styles = StyleSheet.create({
         position: "absolute",
         bottom: 30,
         right: 30,
+        width: 80,
         zIndex: 99,
     },
 
@@ -74,8 +79,7 @@ const styles = StyleSheet.create({
         flexGrow: 1,
         flexDirection: "row",
         flexWrap: "wrap",
-        justifyContent: "flex-start",
-        alignContent: "flex-start",
+        justifyContent: "space-between",
         paddingHorizontal: 40,
         paddingBottom: 100,
         gap: 20,
