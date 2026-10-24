@@ -25,7 +25,7 @@ function CartProduct({ item }: { item: CartItem }) {
                         style={styles.quantityButton}
                         onPress={() => removeFromCart(item.id)}>
 
-                        <text style={styles.quantityButtonText}> - </text>
+                        <Text style={styles.quantityButtonText}> - </Text>
                     </TouchableOpacity>
                     <Text style={styles.quantityText}>{item.quantity}</Text>
                     <TouchableOpacity
@@ -44,7 +44,11 @@ function CartProduct({ item }: { item: CartItem }) {
 }
 
 export default function CartPage() {
-    const { cart, } = useCart()
+    const { cart, getTotalItems, getTotalPrice, clearCart } = useCart()
+    const finishPurchase = () => {
+        alert("¡Pedido realizado con éxito!\nTe llegará muy pronto.");
+        clearCart();
+    };
 
     return (
         <SafeAreaView style={styles.container}>
@@ -63,16 +67,39 @@ export default function CartPage() {
 
                     </View>
                 ) : (
-                    <View style={styles.cartItemsContainer}>
-                        {cart.map((item) => (
-                            <CartProduct key={item.id.toString()} item={item} />
-                        ))}
-                    </View>
+                    <>
+                        <View style={styles.cartItemsContainer}>
+                            {cart.map((item) => (
+                                <CartProduct key={item.id.toString()} item={item} />
+                            ))}
+                        </View>
+                        <View style={styles.summary}>
+                            <Text style={styles.summaryTitle}>Resumen del pedido</Text>
 
+                            <View style={styles.summaryRow}>
+                                <Text style={styles.itemCount}>Articulos ({getTotalItems()}</Text>
+                                <Text style={styles.itemCountValue}>${getTotalPrice().toFixed(2)}</Text>
+                            </View>
+
+                            <View style={styles.totalRow}>
+                                <Text style={styles.totalLabel}>Total</Text>
+                                <Text style={styles.totalPrice}>${getTotalPrice().toFixed(2)}</Text>
+                            </View>
+                            <TouchableOpacity
+                                style={styles.checkoutButton}
+                                onPress={finishPurchase}
+                            >
+                                <Text style={styles.checkoutButtonText}>Finalizar compra</Text>
+                            </TouchableOpacity>
+                        </View>
+
+
+                    </>
                 )}
 
+
             </ScrollView>
-        </SafeAreaView>
+        </SafeAreaView >
     );
 }
 
@@ -181,4 +208,61 @@ const styles = StyleSheet.create({
         fontSize: 15,
         fontWeight: "bold",
     },
+    summary: {
+        backgroundColor: "#0F1A24",
+        borderColor: "#1E293B",
+        borderWidth: 1,
+        borderRadius: 12,
+        padding: 20,
+        gap: 16,
+        marginTop: 8,
+    },
+    summaryTitle: {
+        color: "#F8FAFC",
+        fontSize: 18,
+        fontWeight: "bold",
+    },
+    summaryRow: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+    },
+    itemCount: {
+        color: "#94A3B8",
+        fontSize: 15,
+    },
+    itemCountValue: {
+        color: "#94A3B8",
+        fontSize: 15,
+    },
+
+    totalRow: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+    },
+    totalLabel: {
+        color: "#F8FAFC",
+        fontSize: 18,
+        fontWeight: "bold",
+    },
+    totalPrice: {
+        color: "#F59E0B",
+        fontSize: 24,
+        fontWeight: "bold",
+    },
+    checkoutButton: {
+        alignItems: "center",
+        backgroundColor: "#2DD4BF",
+        borderRadius: 8,
+        padding: 16,
+        marginTop: 8,
+    },
+    checkoutButtonText: {
+        color: "#0F172A",
+        fontWeight: "bold",
+        fontSize: 16,
+        textTransform: "uppercase",
+    },
+
 });
