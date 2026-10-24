@@ -7,6 +7,8 @@ import productImages from "../../Components/productImages";
 
 
 function CartProduct({ item }: { item: CartItem }) {
+    const { removeFromCart, addToCart } = useCart();
+
     return (
         <View style={styles.productCard}>
             <Image
@@ -17,13 +19,32 @@ function CartProduct({ item }: { item: CartItem }) {
             <View style={styles.productDetails}>
                 <Text style={styles.productName} numberOfLines={1}>{item.name}</Text>
                 <Text style={styles.productPrice}>${item.price.toFixed(2)}</Text>
+
+                <View style={styles.quantityContainer}>
+                    <TouchableOpacity
+                        style={styles.quantityButton}
+                        onPress={() => removeFromCart(item.id)}>
+
+                        <text style={styles.quantityButtonText}> - </text>
+                    </TouchableOpacity>
+                    <Text style={styles.quantityText}>{item.quantity}</Text>
+                    <TouchableOpacity
+                        style={styles.quantityButton}
+                        onPress={() => addToCart(item)}>
+
+                        <Text style={styles.quantityButtonText}> + </Text>
+
+                    </TouchableOpacity>
+
+
+                </View>
             </View>
         </View>
     );
 }
 
 export default function CartPage() {
-    const { cart } = useCart()
+    const { cart, } = useCart()
 
     return (
         <SafeAreaView style={styles.container}>
@@ -136,6 +157,28 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         fontSize: 15,
     },
-
-
+    quantityContainer: {
+        flexDirection: "row",
+        alignItems: "center",
+        gap: 12,
+        marginTop: 8,
+    },
+    quantityButton: {
+        backgroundColor: "#1E293B",
+        width: 28,
+        height: 28,
+        borderRadius: 6,
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    quantityButtonText: {
+        color: "#2DD4BF",
+        fontSize: 16,
+        fontWeight: "bold",
+    },
+    quantityText: {
+        color: "#F8FAFC",
+        fontSize: 15,
+        fontWeight: "bold",
+    },
 });
