@@ -7,36 +7,48 @@ import productImages from "../../Components/productImages";
 
 
 function CartProduct({ item }: { item: CartItem }) {
-    const { removeFromCart, addToCart } = useCart();
-
+    const { removeFromCart, addToCart, deleteFromCart } = useCart();
+    const subtotal = Number(item.price) * Number(item.quantity);
     return (
         <View style={styles.productCard}>
-            <Image
-                source={productImages[item.image]}
-                style={styles.image}
-                resizeMode="contain"
-            />
+            <View style={styles.imageContainer}>
+                <Image
+                    source={productImages[item.image]}
+                    style={styles.image}
+                    resizeMode="contain"
+                />
+            </View>
+
             <View style={styles.productDetails}>
-                <Text style={styles.productName} numberOfLines={1}>{item.name}</Text>
-                <Text style={styles.productPrice}>${item.price.toFixed(2)}</Text>
-
-                <View style={styles.quantityContainer}>
+                <View style={styles.productHeader}>
+                    <Text style={styles.productName} numberOfLines={1}>{item.name}</Text>
                     <TouchableOpacity
-                        style={styles.quantityButton}
-                        onPress={() => removeFromCart(item.id)}>
-
-                        <Text style={styles.quantityButtonText}> - </Text>
+                        style={styles.deleteButton}
+                        onPress={() => deleteFromCart ? deleteFromCart(item.id) : removeFromCart(item.id)}>
+                        <Text style={styles.deleteIcon}>✕</Text>
                     </TouchableOpacity>
-                    <Text style={styles.quantityText}>{item.quantity}</Text>
-                    <TouchableOpacity
-                        style={styles.quantityButton}
-                        onPress={() => addToCart(item)}>
+                </View>
 
-                        <Text style={styles.quantityButtonText}> + </Text>
+                <Text style={styles.productPrice}>{item.price.toFixed(2)} €</Text>
 
-                    </TouchableOpacity>
+                <View style={styles.productBottomRow}>
+                    <View style={styles.quantityContainer}>
+                        <TouchableOpacity
+                            style={styles.quantityButton}
+                            onPress={() => removeFromCart(item.id)}>
 
+                            <Text style={styles.quantityButtonText}> - </Text>
+                        </TouchableOpacity>
+                        <Text style={styles.quantityText}>{item.quantity}</Text>
+                        <TouchableOpacity
+                            style={styles.quantityButton}
+                            onPress={() => addToCart(item)}>
 
+                            <Text style={styles.quantityButtonText}> + </Text>
+
+                        </TouchableOpacity>
+                    </View>
+                    <Text style={styles.subtotalText}>{subtotal.toFixed(2)}€</Text>
                 </View>
             </View>
         </View>
@@ -76,14 +88,16 @@ export default function CartPage() {
                         <View style={styles.summary}>
                             <Text style={styles.summaryTitle}>Resumen del pedido</Text>
 
+                            <View style={styles.separator} />
+
                             <View style={styles.summaryRow}>
-                                <Text style={styles.itemCount}>Articulos ({getTotalItems()}</Text>
-                                <Text style={styles.itemCountValue}>${getTotalPrice().toFixed(2)}</Text>
+                                <Text style={styles.itemCount}>Articulos ({getTotalItems()})</Text>
+                                <Text style={styles.itemCountValue}>{getTotalPrice().toFixed(2)} €</Text>
                             </View>
 
                             <View style={styles.totalRow}>
                                 <Text style={styles.totalLabel}>Total</Text>
-                                <Text style={styles.totalPrice}>${getTotalPrice().toFixed(2)}</Text>
+                                <Text style={styles.totalPrice}>{getTotalPrice().toFixed(2)} €</Text>
                             </View>
                             <TouchableOpacity
                                 style={styles.checkoutButton}
@@ -112,14 +126,42 @@ const styles = StyleSheet.create({
 
     title: {
         color: "#F8FAFC",
-        fontSize: 28,
+        fontSize: 24,
         fontWeight: "bold",
         textAlign: "center",
         marginBottom: 8,
     },
     content: {
-        padding: 20,
-        gap: 14,
+        padding: 16,
+        gap: 16,
+    },
+    imageContainer: {
+        width: 80,
+        height: 80,
+        backgroundColor: "#1E293B",
+        borderRadius: 8,
+        padding: 4,
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    productHeader: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "flex-start",
+    },
+    productBottomRow: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        marginTop: 8,
+    },
+    deleteButton: {
+        padding: 4,
+    },
+    deleteIcon: {
+        fontSize: 16,
+        color: "#64748B",
+        fontWeight: "bold",
     },
 
     emptyCart: {
@@ -139,7 +181,8 @@ const styles = StyleSheet.create({
     },
 
     emptyDescription: {
-        color: "#94A3B8",
+        color: "#2DD4BF",
+        fontSize: 64
     },
     catalogButton: {
         backgroundColor: "#2DD4BF",
@@ -161,7 +204,11 @@ const styles = StyleSheet.create({
         borderRadius: 12,
         padding: 12,
         marginBottom: 10,
+        flexDirection: "row",
+        alignItems: "center",
+        gap: 16,
     },
+
     image: {
         width: "100%",
         height: "100%",
@@ -173,6 +220,7 @@ const styles = StyleSheet.create({
     productDetails: {
         flex: 1,
         gap: 4,
+        justifyContent: "space-between",
     },
     productName: {
         color: "#F8FAFC",
@@ -235,6 +283,11 @@ const styles = StyleSheet.create({
         color: "#94A3B8",
         fontSize: 15,
     },
+    subtotalText: {
+        color: "#F59E0B",
+        fontSize: 16,
+        fontWeight: "bold",
+    },
 
     totalRow: {
         flexDirection: "row",
@@ -265,4 +318,8 @@ const styles = StyleSheet.create({
         textTransform: "uppercase",
     },
 
+    separator: {
+        height: 1,
+        backgroundColor: "#1E293B",
+    },
 });
