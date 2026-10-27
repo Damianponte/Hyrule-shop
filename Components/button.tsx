@@ -1,12 +1,10 @@
 import React from "react";
-
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 
 type ButtonProps = {
     text: string;
     onPress: () => void;
 };
-
 
 const Button: React.FC<ButtonProps> = ({ text = "", onPress }) => (
     <TouchableOpacity
@@ -20,26 +18,26 @@ const Button: React.FC<ButtonProps> = ({ text = "", onPress }) => (
 
 const styles = StyleSheet.create({
     button: {
-        margin: 5,
-        backgroundColor: "#2DD4BF",
-        paddingVertical: 12,
-        paddingHorizontal: 20,
-        borderColor: "#D4AF37",
-        width: 100,
-        borderRadius: 10,
-        borderWidth: 1,
+        flexDirection: "row",
         alignItems: "center",
         justifyContent: "center",
+        height: 24,
+        backgroundColor: "#2DD4BF",
+        paddingVertical: 4,
+        paddingHorizontal: 8,
+        borderRadius: 8,
+        borderWidth: 1,
+        borderColor: "#D4AF37",
         elevation: 4,
         boxShadow: "0px 4px 8px rgba(45, 212, 191, 0.25)",
-
     },
     text: {
         color: "#0F172A",
         textAlign: "center",
         fontWeight: "bold",
-        fontSize: 14,
+        fontSize: 11,
     },
 });
+
 
 export default Button;
