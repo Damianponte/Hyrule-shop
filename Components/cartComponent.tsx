@@ -1,18 +1,24 @@
 import React, { createContext, useContext, useState } from "react";
-import Button from "./button";
+import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import { MaterialIcons } from "@expo/vector-icons";
+import { router } from "expo-router";
 
-interface CartItem {
+
+export interface CartItem {
     id: number | string;
     name: string;
     price: number;
     image: string;
     quantity: number;
 }
+type CartProduct = Omit<CartItem, "quantity">;
 
 interface CartContextType {
     cart: CartItem[];
-    addToCart: (product: any) => void;
+    addToCart: (product: CartProduct) => void;
     removeFromCart: (productId: number | string) => void;
+    deleteFromCart: (productId: number | string) => void;
+    clearCart: () => void;
     getTotalItems: () => number;
     getTotalPrice: () => number;
 }
@@ -22,7 +28,7 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 export function CartProvider({ children }: { children: React.ReactNode }) {
     const [cart, setCart] = useState<CartItem[]>([]);
 
-    const addToCart = (product: any) => {
+    const addToCart = (product: CartProduct) => {
         setCart((prevCart) => {
             const existingItem = prevCart.find((item) => item.id === product.id);
             if (existingItem) {
@@ -30,6 +36,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
                     item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
                 );
             }
+
             return [...prevCart, {
                 id: product.id,
                 name: product.name,
@@ -39,6 +46,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
             }];
         });
     };
+
     const removeFromCart = (productId: number | string) => {
         setCart((prevCart) => {
             const existingItem = prevCart.find((item) => item.id === productId);
@@ -52,6 +60,12 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         });
     };
 
+    const deleteFromCart = (productId: number | string) => {
+        setCart((prevCart) => prevCart.filter((item) => item.id !== productId));
+    };
+
+    const clearCart = () => setCart([]);
+
     const getTotalItems = () => {
         return cart.reduce((sum, item) => sum + item.quantity, 0);
     };
@@ -61,7 +75,15 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     };
 
     return (
-        <CartContext.Provider value={{ cart, addToCart, removeFromCart, getTotalItems, getTotalPrice }}>
+        <CartContext.Provider value={{
+            cart,
+            addToCart,
+            removeFromCart,
+            deleteFromCart,
+            clearCart,
+            getTotalItems,
+            getTotalPrice,
+        }}>
             {children}
         </CartContext.Provider>
     );
@@ -80,11 +102,39 @@ export function CartButton() {
     const { getTotalItems, getTotalPrice } = useCart();
 
     return (
-        <Button
-            text={`🛒 ${getTotalItems()} uds (${getTotalPrice()} €)`}
-            onPress={() => {
-                alert(`uds: ${getTotalPrice()} Euros`);
-            }}
-        />
+        <TouchableOpacity
+            style={styles.cartButton}
+            activeOpacity={0.7}
+            onPress={() => router.push("/carrito")}
+            accessibilityRole="button"
+            accessibilityLabel="Abrir carrito"
+        >
+            <MaterialIcons name="shopping-cart" size={14} color="#0F172A" />
+            <Text style={styles.cartButtonText}>
+                {getTotalItems()} uds · {getTotalPrice()} €
+            </Text>
+        </TouchableOpacity>
     );
 }
+
+const styles = StyleSheet.create({
+    cartButton: {
+        flexDirection: "row",
+        alignItems: "center",
+        gap: 3,
+        height: 24,
+        backgroundColor: "#2DD4BF",
+        paddingVertical: 4,
+        paddingHorizontal: 8,
+        borderRadius: 8,
+        borderWidth: 1,
+        borderColor: "#D4AF37",
+        elevation: 4,
+        boxShadow: "0px 4px 8px rgba(45, 212, 191, 0.25)",
+    },
+    cartButtonText: {
+        color: "#0F172A",
+        fontWeight: "bold",
+        fontSize: 11,
+    },
+});
