@@ -1,17 +1,20 @@
 import { Stack, router } from "expo-router";
-import { StatusBar, View, StyleSheet, Image, Text, Linking } from "react-native";
+import { Image, Linking, StyleSheet, Text, View, useWindowDimensions } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import Button from "../../Components/button";
 import { CartButton, CartProvider } from "../../Components/cartComponent";
+import DropdownMenu from "../../Components/DropdownMenu";
+
 export default function RootLayout() {
+  const { width } = useWindowDimensions();
+  const isDesktop = width >= 768;
+
   return (
     <CartProvider>
-
-
       <SafeAreaProvider>
         <View style={styles.PrincipalContent}>
           <SafeAreaView style={styles.safeAreaContainer}>
-            <View style={styles.headerContainer}>
+            <View style={[styles.headerContainer, isDesktop && styles.headerContainerDesktop]}>
               <View style={styles.leftBlock}>
                 <Image
                   source={require("../../assets/images/logo/logo.jpg")}
@@ -25,14 +28,22 @@ export default function RootLayout() {
 
               </View>
               <View style={styles.rightBlock}>
-                <Button
-                  text="inicio"
-                  onPress={() => router.push("/")}
-                />
-                <Button
-                  text="catalogo"
-                  onPress={() => router.push("/catalog")}
-                />
+                {isDesktop ? (
+
+                  <>
+                    <Button
+                      text="inicio"
+                      onPress={() => router.push("/")}
+                    />
+                    <Button
+                      text="catalogo"
+                      onPress={() => router.push("/catalog")}
+                    />
+                  </>
+                ) : (
+
+                  <DropdownMenu />
+                )}
                 <CartButton />
               </View>
 
@@ -48,6 +59,7 @@ export default function RootLayout() {
 
               }
             }
+
           />
         </View>
         <View style={styles.ContainerFooter}>
@@ -74,18 +86,27 @@ export default function RootLayout() {
 const styles = StyleSheet.create({
   PrincipalContent: {
     backgroundColor: "#0A0F15",
+    zIndex: 9999,
+    elevation: 9999,
+
   },
 
   safeAreaContainer: {
     backgroundColor: "#0D131F",
     borderBottomWidth: 1,
-    borderBottomColor: "#5cdc38"
+    borderBottomColor: "#5cdc38",
+    zIndex: 9999,
+    elevation: 9999,
   },
   headerContainer: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
     paddingHorizontal: 10,
+
+  },
+  headerContainerDesktop: {
+    padding: 10,
   },
   leftBlock: {
     flexDirection: "row",
@@ -116,6 +137,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 10,
+    zIndex: 9999,
+    elevation: 9999,
   },
 
 
