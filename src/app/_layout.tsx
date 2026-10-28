@@ -1,13 +1,32 @@
+import { useAudioPlayer } from 'expo-audio';
 import { Stack, router } from "expo-router";
+import { useEffect } from 'react';
 import { Image, Linking, StyleSheet, Text, View, useWindowDimensions } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import Button from "../../Components/button";
 import { CartButton, CartProvider } from "../../Components/cartComponent";
 import DropdownMenu from "../../Components/DropdownMenu";
 
+const backMusic = require("../../assets/melodies/KokiriForest.mp3")
+
 export default function RootLayout() {
   const { width } = useWindowDimensions();
   const isDesktop = width >= 768;
+
+  const player = useAudioPlayer(backMusic);
+
+  useEffect(() => {
+    player.loop = true;
+
+    player.volume = 0.5;
+    player.play();
+    return () => {
+
+      player.pause();
+    };
+  },
+    [player]);
+
 
   return (
     <CartProvider>
