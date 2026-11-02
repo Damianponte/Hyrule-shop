@@ -12,21 +12,22 @@ const backMusic = require("../../assets/melodies/KokiriForest.mp3")
 export default function RootLayout() {
   const { width } = useWindowDimensions();
   const isDesktop = width >= 768;
+  function BackgroundMusic() {
+    const player = useAudioPlayer(backMusic);
 
-  const player = useAudioPlayer(backMusic);
+    useEffect(() => {
+      player.loop = true;
 
-  useEffect(() => {
-    player.loop = true;
+      player.volume = 0.5;
+      player.play();
+      return () => {
 
-    player.volume = 0.5;
-    player.play();
-    return () => {
-
-      player.pause();
-    };
-  },
-    [player]);
-
+        player.pause();
+      };
+    },
+      [player]);
+    return null;
+  }
 
   return (
     <CartProvider>
