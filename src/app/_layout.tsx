@@ -6,6 +6,7 @@ import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import Button from "../../Components/button";
 import { CartButton, CartProvider } from "../../Components/cartComponent";
 import DropdownMenu from "../../Components/DropdownMenu";
+import Search from '../../Components/search';
 
 const backMusic = require("../../assets/melodies/KokiriForest.mp3")
 
@@ -47,9 +48,13 @@ export default function RootLayout() {
                 </View>
 
               </View>
-              <View style={styles.rightBlock}>
-                {isDesktop ? (
+              <View style={styles.searchContainer}>
+                <Search />
 
+              </View>
+              <View style={styles.rightBlock}>
+
+                {isDesktop ? (
                   <>
                     <Button
                       text="inicio"
@@ -151,6 +156,9 @@ const styles = StyleSheet.create({
     color: "#F8FAFC",
     fontSize: 10,
     fontWeight: "bold",
+
+  },
+  searchContainer: {
 
   },
   rightBlock: {
