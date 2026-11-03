@@ -1,42 +1,100 @@
-import react, { useState } from "react";
-import { View, StyleSheet, TextInput, TouchableOpacity } from "react-native";
+import React, { useState } from "react";
+import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, useWindowDimensions, View } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
+import productsData from "../Data/Products.json";
 
+export type Product = (typeof productsData)[0];
 
 interface SearchProps {
-    onSearch?: (text: string) => void;
+    onSearch?: (results: Product[], query: string) => void;
     onClear?: () => void;
+    placeholder?: string;
 }
 
-export default function Search({ onSearch, onClear }: SearchProps) {
+export default function Search(
+    {
+        onSearch, onClear, placeholder = "Buscar producto..."
+    }: SearchProps) {
 
     const [searchQuery, setSearchQuery] = useState("");
+    const [results, setResults] = useState<Product[]>([]);
+    const { width: screenWidth } = useWindowDimensions();
+    const searchWidth = Math.min(screenWidth * 0.34, 280);
+
+    const executeSearch = (text: string) => {
+        const query = text.trim();
+
+        if (!query) {
+            setResults([]);
+            if (onClear) onClear();
+            if (onSearch) onSearch(productsData, "");
+            return;
+        }
+
+        const normalize = (str: string) =>
+            str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+
+        const normalizedQuery = normalize(query);
+        const priceQuery = query.replace(/[€$£]/g, "").trim().replace(",", ".");
+        const isPriceQuery = /^\d+(?:\.\d+)?$/.test(priceQuery);
+        const numericPrice = isPriceQuery ? Number(priceQuery) : NaN;
+        const idQuery = query.replace(/^#/, "");
+
+        const filteredProducts = productsData.filter((product) => {
+            const matchesId = product.id?.toString() === idQuery;
+
+            const matchesName = product.name
+                ? normalize(product.name).includes(normalizedQuery)
+                : false;
+
+            const matchesPrice =
+                isPriceQuery &&
+                product.price !== undefined &&
+                product.price === numericPrice;
+
+            const matchesCategory = product.category
+                ? normalize(product.category).includes(normalizedQuery)
+                : false;
+
+            const matchesDescription = product.description
+                ? normalize(product.description).includes(normalizedQuery)
+                : false;
+
+            return (
+                matchesId || matchesName || matchesPrice || matchesCategory || matchesDescription
+            );
+        });
+
+        setResults(filteredProducts);
+        if (onSearch) onSearch(filteredProducts, query);
+    };
 
     const handleTextChange = (text: string) => {
         setSearchQuery(text);
-        if (onSearch) {
-            onSearch(text);
-        }
+        executeSearch(text);
     };
 
     const handleClear = () => {
         setSearchQuery("");
-        if (onClear) {
-            onClear();
-        }
+        setResults([]);
+        if (onClear) onClear();
+        if (onSearch) onSearch(productsData, "");
     };
 
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, { width: searchWidth }]}>
             <View style={styles.searchContainer}>
                 <MaterialIcons name="search" style={styles.icon} />
                 <TextInput
                     style={styles.inputSearch}
-                    placeholder="Buscar por ID, nombre, precio, categoría..."
+                    placeholder={placeholder}
                     placeholderTextColor="#64748B"
                     value={searchQuery}
                     onChangeText={handleTextChange}
                     returnKeyType="search"
+                    autoCorrect={false}
+                    autoCapitalize="none"
+                    accessibilityLabel="Buscar productos"
                 />
                 {searchQuery.length > 0 && (
                     <TouchableOpacity onPress={handleClear} style={styles.clearBtn} activeOpacity={0.7}>
@@ -44,13 +102,33 @@ export default function Search({ onSearch, onClear }: SearchProps) {
                     </TouchableOpacity>
                 )}
             </View>
+            {searchQuery.trim().length > 0 && (
+                <View style={styles.resultsContainer}>
+                    {results.length > 0 ? (
+                        <ScrollView
+                            keyboardShouldPersistTaps="handled"
+                            style={styles.resultsList}
+                        >
+                            {results.map((product) => (
+                                <View key={product.id} style={styles.resultItem}>
+                                    <Text style={styles.resultName}>{product.name}</Text>
+                                    <Text style={styles.resultPrice}>€{product.price}</Text>
+                                </View>
+                            ))}
+                        </ScrollView>
+                    ) : (
+                        <Text style={styles.noResults}>No se encontraron productos</Text>
+                    )}
+                </View>
+            )}
         </View>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
-        width: "100%",
+        position: "relative",
+        zIndex: 10000,
     },
     searchContainer: {
         flexDirection: "row",
@@ -61,6 +139,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         paddingHorizontal: 12,
         height: 42,
+        width: "100%",
     },
     icon: {
         fontSize: 18,
@@ -69,18 +148,57 @@ const styles = StyleSheet.create({
     },
     inputSearch: {
         flex: 1,
-        color: "#154c83",
-        fontSize: 18,
+        minWidth: 0,
+        color: "#F8FAFC",
+        fontSize: 13,
         height: "100%",
-    },
-    iconClose: {
-        flex: 1,
-        color: "#154c83",
-        fontSize: 18,
-        height: "100%",
+        paddingVertical: 0,
     },
     clearBtn: {
         padding: 4,
+    },
+    iconClose: {
+        color: "#94A3B8",
+        fontSize: 16,
+    },
+    resultsContainer: {
+        position: "absolute",
+        top: 46,
+        left: 0,
+        right: 0,
+        backgroundColor: "#111827",
+        borderColor: "#334155",
+        borderWidth: 1,
+        borderRadius: 8,
+        zIndex: 10000,
+        elevation: 10,
+    },
+    resultsList: {
+        maxHeight: 220,
+    },
+    resultItem: {
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+        paddingHorizontal: 10,
+        paddingVertical: 9,
+        borderBottomColor: "#334155",
+        borderBottomWidth: StyleSheet.hairlineWidth,
+    },
+    resultName: {
+        flex: 1,
+        color: "#F8FAFC",
+        fontSize: 13,
+        marginRight: 8,
+    },
+    resultPrice: {
+        color: "#2DD4BF",
+        fontSize: 12,
+    },
+    noResults: {
+        color: "#94A3B8",
+        fontSize: 13,
+        padding: 10,
     },
 
 })
