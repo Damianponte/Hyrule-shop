@@ -5,6 +5,7 @@ import { router, useLocalSearchParams } from "expo-router";
 import productImages from "../../Components/productImages";
 import productsData from "../../Data/Products.json";
 import Button from "../../Components/button";
+import { useCart } from "../../Components/cartComponent";
 
 
 export default function ProductDetailScreen() {
@@ -13,6 +14,8 @@ export default function ProductDetailScreen() {
     const isDesktop = width >= 768;
 
     const product = productsData.find((item) => item.id.toString() === id);
+    const { cart, addToCart, removeFromCart } = useCart();
+
 
     if (!product) {
         return (
@@ -22,6 +25,9 @@ export default function ProductDetailScreen() {
             </SafeAreaView>
         );
     }
+
+    const itemInCart = cart.find((item) => item.id === product.id);
+    const quantity = itemInCart ? itemInCart.quantity : 0;
 
     return (
         <SafeAreaView style={styles.container}>
@@ -53,6 +59,44 @@ export default function ProductDetailScreen() {
 
                         <Text style={styles.descriptionTitle}>Descripción</Text>
                         <Text style={styles.description}>{product.description}</Text>
+
+                        <View style={styles.cartActionsContainer}>
+                            {quantity === 0 ? (
+                                <TouchableOpacity
+                                    style={styles.addCartBtn}
+                                    onPress={() => addToCart(product)}
+                                    activeOpacity={0.8}
+                                >
+                                    <Text style={styles.addCartBtnText}>Añadir al carrito</Text>
+                                </TouchableOpacity>
+                            ) : (
+                                <View style={styles.quantityControlsWrapper}>
+                                    <View style={styles.inCartStatus}>
+                                        <Text style={styles.inCartStatusText}>
+                                            En el carrito ({quantity})
+                                        </Text>
+                                    </View>
+                                    <View style={styles.quantityContainer}>
+                                        <TouchableOpacity
+                                            style={styles.qtyBtn}
+                                            onPress={() => removeFromCart(product.id)}
+                                            activeOpacity={0.7}
+                                        >
+                                            <Text style={styles.qtyBtnText}>-</Text>
+                                        </TouchableOpacity>
+                                        <Text style={styles.qtyText}>{quantity}</Text>
+                                        <TouchableOpacity
+                                            style={styles.qtyBtn}
+                                            onPress={() => addToCart(product)}
+                                            activeOpacity={0.7}
+                                        >
+                                            <Text style={styles.qtyBtnText}>+</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                </View>
+                            )}
+                        </View>
+
                     </View>
                 </View>
             </ScrollView>
@@ -175,6 +219,64 @@ const styles = StyleSheet.create({
         color: "#94A3B8",
         fontSize: 14,
         lineHeight: 22,
+    },
+    cartActionsContainer: {
+        marginTop: 16,
+        width: "100%",
+    },
+    addCartBtn: {
+        backgroundColor: "#2DD4BF",
+        paddingVertical: 14,
+        borderRadius: 8,
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    addCartBtnText: {
+        color: "#0F172A",
+        fontSize: 16,
+        fontWeight: "bold",
+    },
+    quantityControlsWrapper: {
+        gap: 10,
+    },
+    inCartStatus: {
+        backgroundColor: "#1E293B",
+        padding: 8,
+        borderRadius: 6,
+        alignItems: "center",
+    },
+    inCartStatusText: {
+        color: "#2DD4BF",
+        fontWeight: "bold",
+        fontSize: 14,
+    },
+    quantityContainer: {
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+        backgroundColor: "#0A0F17",
+        borderRadius: 8,
+        borderWidth: 1,
+        borderColor: "#2DD4BF",
+        padding: 6,
+    },
+    qtyBtn: {
+        backgroundColor: "#2DD4BF",
+        width: 36,
+        height: 36,
+        borderRadius: 6,
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    qtyBtnText: {
+        color: "#0F172A",
+        fontSize: 20,
+        fontWeight: "bold",
+    },
+    qtyText: {
+        color: "#F8FAFC",
+        fontSize: 16,
+        fontWeight: "bold",
     },
 
 
