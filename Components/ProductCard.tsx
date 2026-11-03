@@ -2,6 +2,7 @@ import { Image, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View } 
 import Button from "../Components/button";
 import { useCart } from "../Components/cartComponent";
 import productImages from "./productImages";
+import { router } from "expo-router";
 
 type Product = {
     image: string;
@@ -16,7 +17,7 @@ type ProductCardProps = {
 };
 
 export default function ProductCard({ product }: ProductCardProps) {
-    const { cart, addToCart, removeFromCart } = useCart();
+    const { cart, addToCart } = useCart();
     const { width } = useWindowDimensions();
     const isDesktop = width > 600;
     const itemInCart = cart.find((item) => item.id === product.id);
@@ -25,12 +26,17 @@ export default function ProductCard({ product }: ProductCardProps) {
     return (
         <View style={[styles.card, isDesktop ? styles.desktopCard : styles.mobileCard]}>
             <View style={styles.imageContainer}>
-
-                <Image
-                    source={productImages[product.image]}
-                    style={styles.Image}
-                    resizeMode="contain"
-                />
+                <TouchableOpacity
+                    onPress={() => router.push({ pathname: "/id" as any, params: { id: product.id } })}
+                    activeOpacity={0.8}
+                    style={styles.imageContainer}
+                >
+                    <Image
+                        source={productImages[product.image]}
+                        style={styles.Image}
+                        resizeMode="contain"
+                    />
+                </TouchableOpacity>
             </View>
 
             <Text style={styles.name}>
@@ -47,21 +53,15 @@ export default function ProductCard({ product }: ProductCardProps) {
                     onPress={() => addToCart(product)}
                 />
             ) : (
-                <View style={styles.quantityContainer}>
-                    <TouchableOpacity
-                        style={styles.qtyBtn}
-                        onPress={() => removeFromCart(product.id)}
-                    >
-                        <Text style={styles.qtyBtnText}>-</Text>
-                    </TouchableOpacity>
-                    <Text style={styles.qtyText}>{quantity}</Text>
-                    <TouchableOpacity
-                        style={styles.qtyBtn}
-                        onPress={() => addToCart(product)}
-                    >
-                        <Text style={styles.qtyBtnText}>+</Text>
-                    </TouchableOpacity>
-                </View>
+
+                <TouchableOpacity
+                    style={styles.inCartBadge}
+                    activeOpacity={0.8}
+                    onPress={() => router.push({ pathname: "/id" as any, params: { id: product.id } })}
+                >
+                    <Text style={styles.inCartBadgeText}>En el carrito ({quantity})</Text>
+                </TouchableOpacity>
+
             )}
         </View>
     );
@@ -122,33 +122,19 @@ const styles = StyleSheet.create({
 
     },
 
-    quantityContainer: {
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-between",
+    inCartBadge: {
         width: "100%",
+        height: 28,
         backgroundColor: "#0A0F17",
         borderRadius: 8,
         borderWidth: 1,
         borderColor: "#2DD4BF",
-        padding: 2,
-    },
-    qtyBtn: {
-        backgroundColor: "#2DD4BF",
-        width: 28,
-        height: 28,
-        borderRadius: 6,
-        alignItems: "center",
         justifyContent: "center",
+        alignItems: "center",
     },
-    qtyBtnText: {
-        color: "#0F172A",
-        fontSize: 16,
-        fontWeight: "bold",
-    },
-    qtyText: {
-        color: "#F8FAFC",
-        fontSize: 14,
+    inCartBadgeText: {
+        color: "#2DD4BF",
+        fontSize: 12,
         fontWeight: "bold",
     },
 });
