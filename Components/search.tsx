@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, useWindowDimensions, View } from "react-native";
+import { Keyboard, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, useWindowDimensions, View } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import productsData from "../Data/Products.json";
 
@@ -19,7 +19,10 @@ export default function Search(
     const [searchQuery, setSearchQuery] = useState("");
     const [results, setResults] = useState<Product[]>([]);
     const { width: screenWidth } = useWindowDimensions();
-    const searchWidth = Math.min(screenWidth * 0.34, 280);
+    const isDesktop = screenWidth >= 768;
+    const [isExpanded, setIsExpanded] = useState(false);
+    const searchWidth = Math.min(screenWidth * 0.28, 220);
+    const mobileSearchWidth = Math.min(screenWidth * 0.5, 190);
 
     const executeSearch = (text: string) => {
         const query = text.trim();
@@ -81,29 +84,78 @@ export default function Search(
         if (onSearch) onSearch(productsData, "");
     };
 
+    const handleClose = () => {
+        Keyboard.dismiss();
+        handleClear();
+        setIsExpanded(false);
+    };
+
     return (
-        <View style={[styles.container, { width: searchWidth }]}>
-            <View style={styles.searchContainer}>
-                <MaterialIcons name="search" style={styles.icon} />
-                <TextInput
-                    style={styles.inputSearch}
-                    placeholder={placeholder}
-                    placeholderTextColor="#64748B"
-                    value={searchQuery}
-                    onChangeText={handleTextChange}
-                    returnKeyType="search"
-                    autoCorrect={false}
-                    autoCapitalize="none"
-                    accessibilityLabel="Buscar productos"
-                />
-                {searchQuery.length > 0 && (
-                    <TouchableOpacity onPress={handleClear} style={styles.clearBtn} activeOpacity={0.7}>
-                        <MaterialIcons name="close" style={styles.iconClose} />
-                    </TouchableOpacity>
-                )}
-            </View>
+        <View style={[styles.container, { width: isDesktop ? searchWidth : 36 }]}>
+            {!isDesktop && !isExpanded ? (
+                <TouchableOpacity
+                    accessibilityLabel="Abrir búsqueda de productos"
+                    accessibilityRole="button"
+                    onPress={() => setIsExpanded(true)}
+                    style={styles.mobileSearchButton}
+                    activeOpacity={0.7}
+                >
+                    <MaterialIcons name="search" style={styles.mobileSearchIcon} />
+                </TouchableOpacity>
+            ) : (
+                <View
+                    style={[
+                        styles.searchContainer,
+                        !isDesktop && styles.mobileExpandedSearch,
+                        !isDesktop && { width: mobileSearchWidth },
+                    ]}
+                >
+                    <MaterialIcons name="search" style={styles.icon} />
+                    <TextInput
+                        style={styles.inputSearch}
+                        placeholder={placeholder}
+                        placeholderTextColor="#64748B"
+                        value={searchQuery}
+                        onChangeText={handleTextChange}
+                        returnKeyType="search"
+                        keyboardType="default"
+                        onSubmitEditing={() => Keyboard.dismiss()}
+                        blurOnSubmit
+                        autoCorrect={false}
+                        autoCapitalize="none"
+                        autoComplete="off"
+                        importantForAutofill="no"
+                        autoFocus={!isDesktop}
+                        accessibilityLabel="Buscar productos"
+                    />
+                    {isDesktop && searchQuery.length > 0 && (
+                        <TouchableOpacity onPress={handleClear} style={styles.clearBtn} activeOpacity={0.7}>
+                            <MaterialIcons name="close" style={styles.iconClose} />
+                        </TouchableOpacity>
+                    )}
+                    {!isDesktop && (
+                        <TouchableOpacity
+                            accessibilityLabel="Cerrar búsqueda de productos"
+                            accessibilityRole="button"
+                            onPress={handleClose}
+                            style={styles.clearBtn}
+                            activeOpacity={0.7}
+                        >
+                            <MaterialIcons name="close" style={styles.iconClose} />
+                        </TouchableOpacity>
+                    )}
+                </View>
+            )}
             {searchQuery.trim().length > 0 && (
-                <View style={styles.resultsContainer}>
+                <View
+                    style={[
+                        styles.resultsContainer,
+                        !isDesktop && {
+                            left: undefined,
+                            width: mobileSearchWidth,
+                        },
+                    ]}
+                >
                     {results.length > 0 ? (
                         <ScrollView
                             keyboardShouldPersistTaps="handled"
@@ -130,6 +182,16 @@ const styles = StyleSheet.create({
         position: "relative",
         zIndex: 10000,
     },
+    mobileSearchButton: {
+        width: 36,
+        height: 36,
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    mobileSearchIcon: {
+        fontSize: 20,
+        color: "#2DD4BF",
+    },
     searchContainer: {
         flexDirection: "row",
         alignItems: "center",
@@ -140,6 +202,13 @@ const styles = StyleSheet.create({
         paddingHorizontal: 12,
         height: 42,
         width: "100%",
+    },
+    mobileExpandedSearch: {
+        position: "absolute",
+        top: 20,
+        right: 0,
+        zIndex: 10001,
+        elevation: 11,
     },
     icon: {
         fontSize: 18,
