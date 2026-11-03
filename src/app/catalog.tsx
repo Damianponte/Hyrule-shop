@@ -7,7 +7,7 @@ import products from "../../Data/Products.json";
 
 export default function catalog() {
     const { width, height } = useWindowDimensions();
-    const scrollViewRef = useRef<ScrollView>(null);
+    const scrollViewRef = useRef<React.ElementRef<typeof ScrollView>>(null);
 
     const scrollToTop = () => {
         scrollViewRef.current?.scrollTo({ y: 0, animated: true });
