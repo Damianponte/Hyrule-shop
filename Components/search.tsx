@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Keyboard, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, useWindowDimensions, View } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import productsData from "../Data/Products.json";
+import { useRouter } from "expo-router";
 
 export type Product = (typeof productsData)[0];
 
@@ -15,7 +16,7 @@ export default function Search(
     {
         onSearch, onClear, placeholder = "Buscar producto..."
     }: SearchProps) {
-
+    const router = useRouter();
     const [searchQuery, setSearchQuery] = useState("");
     const [results, setResults] = useState<Product[]>([]);
     const { width: screenWidth } = useWindowDimensions();
@@ -120,7 +121,7 @@ export default function Search(
                         returnKeyType="search"
                         keyboardType="default"
                         onSubmitEditing={() => Keyboard.dismiss()}
-                        blurOnSubmit
+
                         autoCorrect={false}
                         autoCapitalize="none"
                         autoComplete="off"
@@ -162,18 +163,28 @@ export default function Search(
                             style={styles.resultsList}
                         >
                             {results.map((product) => (
-                                <View key={product.id} style={styles.resultItem}>
+                                <TouchableOpacity key={product.id} style={styles.resultItem}
+
+                                    onPress={() => {
+                                        handleClose();
+                                        router.push({
+                                            pathname: "/id",
+                                            params: { id: product.id }
+                                        } as any);
+                                    }}
+                                >
                                     <Text style={styles.resultName}>{product.name}</Text>
                                     <Text style={styles.resultPrice}>€{product.price}</Text>
-                                </View>
+                                </TouchableOpacity>
                             ))}
                         </ScrollView>
                     ) : (
                         <Text style={styles.noResults}>No se encontraron productos</Text>
                     )}
                 </View>
-            )}
-        </View>
+            )
+            }
+        </View >
     );
 }
 
