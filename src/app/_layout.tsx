@@ -7,32 +7,18 @@ import Button from "../../Components/button";
 import { CartButton, CartProvider } from "../../Components/cartComponent";
 import DropdownMenu from "../../Components/DropdownMenu";
 import Search from '../../Components/search';
+import MusicPlayer from "../../Components/musicPlayer";
 
 const backMusic = require("../../assets/melodies/KokiriForest.mp3")
 
 export default function RootLayout() {
   const { width } = useWindowDimensions();
   const isDesktop = width >= 768;
-  function BackgroundMusic() {
-    const player = useAudioPlayer(backMusic);
-
-    useEffect(() => {
-      player.loop = true;
-
-      player.volume = 0.5;
-      player.play();
-      return () => {
-
-        player.pause();
-      };
-    },
-      [player]);
-    return null;
-  }
 
   return (
     <CartProvider>
       <SafeAreaProvider>
+
         <View style={styles.PrincipalContent}>
           <SafeAreaView style={styles.safeAreaContainer}>
             <View style={[styles.headerContainer, isDesktop && styles.headerContainerDesktop]}>
@@ -46,13 +32,15 @@ export default function RootLayout() {
                   <Text style={styles.shopTitle}>HYRULE</Text>
                   <Text style={styles.shopSubtitle}>SHOP</Text>
                 </View>
+                <MusicPlayer />
 
               </View>
-              <View style={styles.searchContainer}>
-                <Search />
 
-              </View>
+
               <View style={styles.rightBlock}>
+                <View style={styles.searchContainer}>
+                  <Search />
+                </View>
 
                 {isDesktop ? (
                   <>
