@@ -1,6 +1,6 @@
 
 import { router } from "expo-router";
-import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, Alert } from "react-native";
 import { useCart, CartItem } from "../../Components/cartComponent";
 import { SafeAreaView } from "react-native-safe-area-context";
 import productImages from "../../Components/productImages";
@@ -9,6 +9,31 @@ import productImages from "../../Components/productImages";
 function CartProduct({ item }: { item: CartItem }) {
     const { removeFromCart, addToCart, deleteFromCart } = useCart();
     const subtotal = Number(item.price) * Number(item.quantity);
+    const confirmDelete = () => {
+        Alert.alert(
+            "Eliminar producto",
+            "¿Estás seguro de que deseas eliminar este producto del carrito?",
+            [
+                {
+                    text: "Cancelar",
+                    style: "cancel",
+                },
+                {
+                    text: "Eliminar",
+                    style: "destructive",
+                    onPress: () => {
+                        if ((deleteFromCart)) {
+                            deleteFromCart(item.id);
+                        } else {
+                            removeFromCart(item.id);
+                        }
+                    },
+                },
+            ],
+            { cancelable: true }
+        );
+    };
+
     return (
         <View style={styles.productCard}>
             <View style={styles.imageContainer}>
@@ -57,9 +82,27 @@ function CartProduct({ item }: { item: CartItem }) {
 
 export default function CartPage() {
     const { cart, getTotalItems, getTotalPrice, clearCart } = useCart()
+
+
     const finishPurchase = () => {
-        alert("¡Pedido realizado con éxito!\nTe llegará muy pronto.");
-        clearCart();
+        Alert.alert(
+            "Confirmar pedido",
+            "¿Estás seguro de que deseas finalizar la compra?",
+            [
+                {
+                    text: "Cancelar",
+                    style: "cancel"
+                },
+                {
+                    text: "Sí, finalizar",
+                    onPress: () => {
+                        clearCart();
+                        Alert.alert("¡Éxito!", "¡Pedido realizado con éxito!\nTe llegará muy pronto.");
+                    }
+                }
+            ],
+            { cancelable: true }
+        );
     };
 
     return (
