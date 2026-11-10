@@ -100,17 +100,21 @@ export function useCart() {
 
 export function CartButton() {
     const { getTotalItems, getTotalPrice } = useCart();
+    const hasItems = getTotalItems() > 0;
 
     return (
         <TouchableOpacity
-            style={styles.cartButton}
+            style={[
+                styles.cartButton,
+                hasItems && styles.cartButtonActive
+            ]}
             activeOpacity={0.7}
             onPress={() => router.push("/carrito")}
             accessibilityRole="button"
             accessibilityLabel="Abrir carrito"
         >
             <MaterialIcons name="shopping-cart" size={14} color="#0F172A" />
-            <Text style={styles.cartButtonText}>
+            <Text style={[styles.cartButtonText, hasItems && styles.cartButtonTextActive]}>
                 {getTotalItems()} uds · {getTotalPrice()} €
             </Text>
         </TouchableOpacity>
@@ -123,7 +127,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         gap: 3,
         height: 24,
-        backgroundColor: "#2DD4BF",
+        backgroundColor: "#1E293B",
         paddingVertical: 4,
         paddingHorizontal: 8,
         borderRadius: 8,
@@ -137,4 +141,15 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         fontSize: 11,
     },
+    cartButtonActive: {
+        backgroundColor: "#5cdc38",
+        borderColor: "#D4AF37",
+        boxShadow: "0px 4px 8px rgba(92, 220, 56, 0.4)",
+    },
+
+
+    cartButtonTextActive: {
+        color: "#0D131F",
+    },
+
 });
