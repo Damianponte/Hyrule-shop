@@ -1,18 +1,18 @@
 import { ImageSourcePropType } from "react-native";
 
 const productImages: Record<string, ImageSourcePropType> = {
-    "arrows.webp": require("../assets/images/arrows.webp"),
-    "deku_nuts.webp": require("../assets/images/deku_nuts.webp"),
-    "bombs.webp": require("../assets/images/bombs.webp"),
-    "bombchus.webp": require("../assets/images/bombchus.webp"),
-    "deku_shield.webp": require("../assets/images/deku_shield.webp"),
-    "hylian_shield.webp": require("../assets/images/hylian_shield.webp"),
-    "red_potion.webp": require("../assets/images/red_potion.webp"),
-    "green_potion.webp": require("../assets/images/green_potion.webp"),
-    "bottle.webp": require("../assets/images/bottle.webp"),
-    "kokiri_sword.webp": require("../assets/images/kokiri_sword.webp"),
-    "biggoron_sword.webp": require("../assets/images/biggoron_sword.webp"),
-    "bomb_bag.webp": require("../assets/images/bomb_bag.webp"),
+    "flechas.webp": require("../assets/images/flechas.webp"),
+    "nuez deku.webp": require("../assets/images/nuez deku.webp"),
+    "bombas.webp": require("../assets/images/bombas.webp"),
+    "bombachus.webp": require("../assets/images/bombachus.webp"),
+    "escudo deku.webp": require("../assets/images/escudo deku.webp"),
+    "escudo hyliano.webp": require("../assets/images/escudo hyliano.webp"),
+    "pocion roja.webp": require("../assets/images/pocion roja.webp"),
+    "pocion verde.webp": require("../assets/images/pocion verde.webp"),
+    "botella.webp": require("../assets/images/botella.webp"),
+    "espada kokiri.webp": require("../assets/images/espada kokiri.webp"),
+    "espada bigoron.webp": require("../assets/images/espada bigoron.webp"),
+    "bolsa de bombas.webp": require("../assets/images/bolsa de bombas.webp"),
 };
 
 export default productImages;
