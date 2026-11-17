@@ -36,7 +36,7 @@ export default function catalog() {
             </ScrollView>
             <View style={styles.buttonContainer}>
                 <Button
-                    text="↑ Arriba"
+                    text="↑"
                     onPress={scrollToTop}
                 />
             </View>
@@ -73,6 +73,9 @@ const styles = StyleSheet.create({
         right: 30,
         width: 80,
         zIndex: 99,
+        borderRadius: 99,
+
+
     },
 
     productList: {

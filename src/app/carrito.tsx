@@ -1,8 +1,8 @@
 
 import { router } from "expo-router";
-import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, Alert } from "react-native";
-import { useCart, CartItem } from "../../Components/cartComponent";
+import { Alert, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { CartItem, useCart } from "../../Components/cartComponent";
 import productImages from "../../Components/productImages";
 
 
@@ -49,7 +49,7 @@ function CartProduct({ item }: { item: CartItem }) {
                     <Text style={styles.productName} numberOfLines={1}>{item.name}</Text>
                     <TouchableOpacity
                         style={styles.deleteButton}
-                        onPress={() => deleteFromCart ? deleteFromCart(item.id) : removeFromCart(item.id)}>
+                        onPress={confirmDelete}>
                         <Text style={styles.deleteIcon}>✕</Text>
                     </TouchableOpacity>
                 </View>
