@@ -12,7 +12,7 @@ const productImages: Record<string, ImageSourcePropType> = {
     "botella.webp": require("../assets/images/botella.webp"),
     "espada kokiri.webp": require("../assets/images/espada kokiri.webp"),
     "espada bigoron.webp": require("../assets/images/espada bigoron.webp"),
-    "bolsa de bombas.webp": require("../assets/images/bolsa de bombas.webp"),
+    "bolsa bombas.webp": require("../assets/images/bolsa de bombas.webp"),
 };
 
 export default productImages;

@@ -1,110 +1,110 @@
 [
   {
     "id": 1,
-    "name": "Arrows",
+    "name": "flechas",
     "price": 20,
-    "category": "Ammunition",
-    "description": "A set of normal arrows used with a bow. Ideal for attacking enemies from a distance and activating mechanisms.",
+    "category": "municion",
+    "description": "conjunto de flechas normales para usar ocn un arco. Ideal para atacar enemigos a distancia y activar mecanismos.",
     "stock": 25,
-    "image": "arrows.webp"
+    "image": "flechas.webp"
   },
   {
     "id": 2,
-    "name": "Deku Nuts",
+    "name": "nuez deku",
     "price": 15,
-    "category": "Ammunition",
-    "description": "Special nuts that can be thrown at enemies to temporarily stun them.",
+    "category": "municion",
+    "description": "nueces especiales que pueden ser lanzadas contra enemigos para aturdirlos temporalmente.",
     "stock": 30,
-    "image": "deku_nuts.webp"
+    "image": "nuez deku.webp"
   },
   {
     "id": 3,
-    "name": "Bombs",
+    "name": "bombas",
     "price": 35,
-    "category": "Explosives",
-    "description": "Explosive devices capable of destroying rocks and obstacles and damaging nearby enemies.",
+    "category": "municion",
+    "description": "Dispositivos explosivos capaces de destruir rocas y obstáculos y dañar enemigos cercanos.",
     "stock": 15,
-    "image": "bombs.webp"
+    "image": "bombas.webp"
   },
   {
     "id": 4,
-    "name": "Bombchus",
+    "name": "bombcahus",
     "price": 100,
-    "category": "Explosives",
-    "description": "Small rodent-shaped explosives that travel along the ground toward their target before exploding.",
+    "category": "municion",
+    "description": "Explosivos con forma de roedor pequeño que se desplazan por el suelo hacia su objetivo antes de estallar..",
     "stock": 10,
-    "image": "bombchus.webp"
+    "image": "bombachus.webp"
   },
   {
     "id": 5,
-    "name": "Deku Shield",
+    "name": "escudo deku",
     "price": 40,
-    "category": "Equipment",
-    "description": "A lightweight shield made of wood. It provides basic protection and is especially useful during the early stages of an adventure.",
+    "category": "equipo",
+    "description": "Un escudo ligero hecho de madera. Proporciona protección básica y es especialmente útil durante las etapas iniciales de una aventura.",
     "stock": 10,
-    "image": "deku_shield.webp"
+    "image": "escudo deku.webp"
   },
   {
     "id": 6,
-    "name": "Hylian Shield",
+    "name": "escudo hyliano",
     "price": 80,
-    "category": "Equipment",
-    "description": "A sturdy shield used by the soldiers of Hyrule. It provides greater protection than the Deku Shield.",
+    "category": "equipo",
+    "description": "Un escudo resistente utilizado por los soldados de Hyrule. Proporciona una protección mayor que el Escudo deku.",
     "stock": 8,
-    "image": "hylian_shield.webp"
+    "image": "escudo hyliano.webp"
   },
   {
     "id": 7,
-    "name": "Red Potion",
+    "name": "pocion roja",
     "price": 30,
-    "category": "Potions",
-    "description": "A healing potion that restores the user's health.",
+    "category": "curativos",
+    "description": "Una pocion que recupera la salud del usuario, restaurando su vitalidad y permitiendo continuar la aventura.",
     "stock": 20,
-    "image": "red_potion.webp"
+    "image": "pocion roja.webp"
   },
   {
     "id": 8,
-    "name": "Green Potion",
+    "name": "pocion verde",
     "price": 30,
-    "category": "Potions",
-    "description": "A potion that restores the user's magic power, allowing magical abilities and items to be used.",
+    "category": "curativos",
+    "description": "Una pocion que restaura el poder magico del usuario, permitiendo usar habilidades y objetos magicos.",
     "stock": 20,
-    "image": "green_potion.webp"
+    "image": "pocion verde.webp"
   },
   {
     "id": 9,
-    "name": "Bottle",
+    "name": "botella",
     "price": 100,
-    "category": "Equipment",
-    "description": "An empty bottle that can be used to store potions, fairies, milk and other special items.",
+    "category": "equipo",
+    "description": "una botella vacia que puede ser utilizada para almacenar pociones, hadas, leche y otros objetos especiales.",
     "stock": 5,
-    "image": "bottle.webp"
+    "image": "botella.webp"
   },
   {
     "id": 10,
-    "name": "Kokiri Sword",
+    "name": "espada kokiri",
     "price": 100,
-    "category": "Weapons",
-    "description": "The traditional sword of the Kokiri. It is light, easy to handle and perfect for beginning an adventure.",
+    "category": "armas",
+    "description": "Tradicional espada de los Kokiri, ligera y fácil de manejar. Ideal para principiantes y aventureros jóvenes.",
     "stock": 5,
-    "image": "kokiri_sword.webp"
+    "image": "espada kokiri.webp"
   },
   {
     "id": 11,
-    "name": "Biggoron Sword",
+    "name": "espada bigoron",
     "price": 200,
-    "category": "Weapons",
-    "description": "A massive sword forged by the legendary blacksmith Biggoron. Its great size provides tremendous attack power, but it requires both hands to wield.",
+    "category": "armas",
+    "description": "Tradicional espada de Biggoron, muy grande y con un poder de ataque tremendo. Requiere ambas manos para ser manejada.",
     "stock": 3,
-    "image": "biggoron_sword.webp"
+    "image": "espada bigoron.webp"
   },
   {
     "id": 12,
-    "name": "Bomb Bag",
+    "name": "bolsa bombas",
     "price": 120,
-    "category": "Equipment",
-    "description": "A special bag used to carry and store bombs. It allows adventurers to carry explosives safely during their journey.",
+    "category": "equipo",
+    "description": "Una bolsa especial utilizada para transportar y almacenar bombas. Permite a los aventureros llevar explosivos de manera segura durante su viaje.",
     "stock": 5,
-    "image": "bomb_bag.webp"
+    "image": "bolsa bombas.webp"
   }
 ]
